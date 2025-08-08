@@ -247,7 +247,7 @@ export default function ReportForm({ onSubmit }: ReportFormProps) {
             isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
-          {isSubmitting ? 'Envoi en cours...' : 'Signaler l&apos;infraction'}
+          {isSubmitting ? 'Envoi en cours...' : 'Signaler'}
         </button>
       </div>
     </form>
