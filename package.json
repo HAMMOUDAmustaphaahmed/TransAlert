@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint . --ext .ts,.tsx",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@types/uuid": "^10.0.0",
