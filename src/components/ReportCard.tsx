@@ -18,13 +18,16 @@ export default function ReportCard({ report }: ReportCardProps) {
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       {report.imageUrl && (
         <div className="relative h-48">
-          <Image
-            src={report.imageUrl}
-            alt="Infraction photo"
-            layout="fill"
-            objectFit="cover"
-            className="w-full"
-          />
+          // Remplacer le composant Image par une balise img normale
+{report.imageUrl && (
+  <div className="relative h-48">
+    <img
+      src={report.imageUrl}
+      alt="Infraction photo"
+      className="w-full h-full object-cover"
+    />
+  </div>
+)}
         </div>
       )}
       <div className="p-4">
