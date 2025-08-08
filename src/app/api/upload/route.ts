@@ -1,31 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-export async function POST(request: NextRequest) {
-  const data = await request.formData();
-  const file: File | null = data.get('file') as unknown as File;
-
-  if (!file) {
-    return NextResponse.json({ error: 'Aucun fichier fourni' }, { status: 400 });
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const filename = searchParams.get('filename');
+  
+  if (!filename) {
+    return new NextResponse('Fichier non spécifié', { status: 400 });
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const filename = `${uuidv4()}.${file.name.split('.').pop()}`;
-  const uploadDir = path.join(process.cwd(), 'public/uploads');
-
   try {
-    await writeFile(path.join(uploadDir, filename), buffer);
-    return NextResponse.json({ filename });
+    const filePath = path.join('/tmp', filename);
+    const file = fs.readFileSync(filePath);
+    
+    return new NextResponse(file, {
+      headers: {
+        'Content-Type': 'image/*',
+        'Cache-Control': 'public, max-age=31536000, immutable'
+      },
+    });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Erreur lors de l\'enregistrement du fichier' }, { status: 500 });
+    return new NextResponse('Fichier non trouvé', { status: 404 });
   }
 }

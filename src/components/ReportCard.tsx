@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Report } from '../types';
 
 interface ReportCardProps {
@@ -18,16 +17,11 @@ export default function ReportCard({ report }: ReportCardProps) {
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       {report.imageUrl && (
         <div className="relative h-48">
-          // Remplacer le composant Image par une balise img normale
-{report.imageUrl && (
-  <div className="relative h-48">
-    <img
-      src={report.imageUrl}
-      alt="Infraction photo"
-      className="w-full h-full object-cover"
-    />
-  </div>
-)}
+          <img
+            src={report.imageUrl}
+            alt="Infraction photo"
+            className="w-full h-full object-cover"
+          />
         </div>
       )}
       <div className="p-4">

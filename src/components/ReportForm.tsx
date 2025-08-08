@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent, useRef, useEffect } from 'react';
+import { useState, FormEvent, useRef } from 'react'; // useEffect supprimé
 import { v4 } from 'uuid';
 import dynamic from 'next/dynamic';
 import ImageUpload from './ImageUpload';
@@ -58,11 +58,11 @@ export default function ReportForm({ onSubmit }: ReportFormProps) {
         });
 
         if (!response.ok) {
-          throw new Error('Échec du téléchargement de l\'image');
+          throw new Error('Échec du téléchargement de l&apos;image');
         }
 
         const data = await response.json();
-        imageUrl = `/uploads/${data.filename}`;
+        imageUrl = `/api/image?filename=${data.filename}`; // Utilisation de la nouvelle route
       }
 
       const newReport: Report = {
@@ -147,7 +147,7 @@ export default function ReportForm({ onSubmit }: ReportFormProps) {
 
       <div>
         <label htmlFor="licensePlate" className="block text-sm font-medium text-gray-700">
-          Plaque d'immatriculation *
+          Plaque d&apos;immatriculation *
         </label>
         <input
           type="text"
@@ -205,14 +205,14 @@ export default function ReportForm({ onSubmit }: ReportFormProps) {
             onChange={(e) => setRouteEnd(e.target.value)}
             required
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-            placeholder="Point d'arrivée"
+            placeholder="Point d&apos;arrivée"
           />
         </div>
       </div>
 
       <div>
         <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
-          Description de l'infraction *
+          Description de l&apos;infraction *
         </label>
         <textarea
           id="comment"
@@ -222,7 +222,7 @@ export default function ReportForm({ onSubmit }: ReportFormProps) {
           maxLength={MAX_COMMENT_LENGTH}
           rows={4}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-          placeholder="Décrivez l'infraction commise par le chauffeur..."
+          placeholder="Décrivez l&apos;infraction commise par le chauffeur..."
         />
         <p className="text-xs text-gray-500 text-right">
           {comment.length}/{MAX_COMMENT_LENGTH} caractères
@@ -247,7 +247,7 @@ export default function ReportForm({ onSubmit }: ReportFormProps) {
             isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
-          {isSubmitting ? 'Envoi en cours...' : 'Signaler l\'infraction'}
+          {isSubmitting ? 'Envoi en cours...' : 'Signaler l&apos;infraction'}
         </button>
       </div>
     </form>
